@@ -1,0 +1,52 @@
+---
+title: "Characterising antigenic evolution of infectious pathogens"
+author: "Paula Weidemueller"
+date: "27. March 2023"
+output: html_notebook
+---
+
+```{r}
+# Load the Racmacs package
+library(Racmacs)
+
+# Read in the titer table
+path_to_titer_file <- system.file("extdata/h3map2004_hitable.csv", package = "Racmacs")
+titer_table        <- read.titerTable(path_to_titer_file)
+```
+```{r}
+# Create the acmap object, specifying the titer table
+map <- acmap(
+  titer_table = titer_table
+)
+```
+
+```{r}
+# Perform some optimization runs on the map object to try and determine a best map
+map <- optimizeMap(
+  map                     = map,
+  number_of_dimensions    = 2,
+  number_of_optimizations = 500,
+  minimum_column_basis    = "none"
+)
+```
+
+```{r}
+plot(map)
+# for interactive plot
+# view(map)
+```
+```{r}
+# Make the acmap object and run optimizations in one step
+map3d <- make.acmap(
+  titer_table             = titer_table,
+  number_of_dimensions    = 3,
+  number_of_optimizations = 500,
+  minimum_column_basis    = "none"
+)
+```
+
+```{r}
+# View the result
+view(map3d)
+```
+
